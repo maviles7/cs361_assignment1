@@ -10,47 +10,44 @@ import time
 IMAGES_DIR = "images"
 IMAGE_FILE = "image-service.txt"
 
+NUM_IMAGES = 6
+
 # imgsrv function
-def get_image(): 
-    # return sorted list of images in the images directory
-    # validate that path exists - if not, then create the path
-    if not os.path.exists(IMAGES_DIR):
-        os.makedirs(IMAGES_DIR)
-
-    # validate file extension
-    valid_extensions = [".png"]
-    # get array of images from images directory w/valid extensions
-    images = [ 
-        os.path.join(IMAGES_DIR, f)
-        for f in os.listdir(IMAGES_DIR)
-        if f.lower().endswith(valid_extensions)
-    ]
-
-    return sorted(images)
-
-print("image microservice started - listening for requests")
-
 while True:
-    time.sleep(1)  # sleep for 1 second
-    # if path exists, then read the file
+    time.sleep(1)
+
+    # open image-service.txt and read
     if os.path.exists(IMAGE_FILE):
         with open(IMAGE_FILE, "r") as f:
             file_content = f.read().strip()
 
-        # if file content is a digit, then generate the modulo of the random number & write to file
+        # if file content is a number, generate image path
         if file_content.isdigit():
-            index = int(file_content)
-            images = get_image()
+            random_number = int(file_content)
+            # modulo logic 
+            mod_num = random_number % NUM_IMAGES
 
-            if not images:
-                response = "ERROR: no images found in images directory"
-            else: 
-                    # modulo logic
-                    modulo_indexed_image = images[index % len(images)]
-                    response = os.path.abspath(modulo_indexed_image)
+            # image logic
+            if mod_num == 0: 
+                image_index = "black"
+            elif mod_num == 1:
+                image_index = "blue"
+            elif mod_num == 2:
+                image_index = "green"
+            elif mod_num == 3:
+                image_index = "orange"
+            elif mod_num == 4:
+                image_index = "red"
+            elif mod_num == 5:
+                image_index = "brown"
 
-            # write the response to the file
+            # image path 
+            image_path = os.path.join(IMAGES_DIR, f"{image_index}.png")
+            print(f"Image microservice generated image path: {image_path}")
+
+            # write image path to image-service.txt
             with open(IMAGE_FILE, "w") as f:
-                f.write(response)
-            print(f"image microservice response: {response}")
-            
+                f.write(image_path)
+
+            print(f"random number: {random_number}")
+            print(f"image path: {image_path}")
