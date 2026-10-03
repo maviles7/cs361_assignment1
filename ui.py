@@ -30,7 +30,7 @@ while True:
         # open image-service.txt & erase data
         with open(IMG_FILE, "w") as f:
             f.write(random_number)
-        print("UI sent random number {random_number} to image-service.txt")
+        print(f"UI sent random number {random_number} to image-service.txt")
 
         time.sleep(5)
 
