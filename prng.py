@@ -14,7 +14,7 @@ print("PRNG microservice started - listening for requests")
 # prng function
 def generate_random_number():
     while True:
-        time.sleep(1)  # Sleep for 1 second
+        time.sleep(1)  # sleep for 1 second
         # if path exists, then read the file
         if os.path.exists(PRNG_FILE):
             with open(PRNG_FILE, "r") as f:
@@ -28,3 +28,5 @@ def generate_random_number():
                 with open(PRNG_FILE, "w") as f:
                     f.write(str(random_number))
                 print(f"random number generated: {random_number}")
+
+generate_random_number()
