@@ -19,7 +19,7 @@ while True:
         file_content = f.read().strip()
 
     # if file content = run, then generate random number 
-    if file_content == "run"; 
+    if file_content == "run"
         random_number = random.randint(0, 100)
         print(f"PRNG microservice generated random number: {random_number}")
 
